@@ -173,8 +173,6 @@ html.js .mz.rv{filter:none}
 .hxw{display:grid;grid-template-columns:minmax(240px,500px) 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;margin-bottom:4rem}
 .hxw .gi.hx{aspect-ratio:4/5;margin:0}.hxw .gi.hx.in img{--sc:1.01}.hxw .gi.hx.in:hover img{--sc:1.05}.hxw .gi.hx img{object-position:50% 38%}.hxw .hxt .lead{margin:0;font-size:clamp(1.6rem,3.2vw,2.7rem)}
 @media(max-width:800px){.hxw{grid-template-columns:1fr}.hxw .gi.hx{max-width:420px}}
-.hbg{position:absolute;z-index:-2;top:0;left:50%;width:100vw;height:100%;transform:translateX(-50%);pointer-events:none;opacity:0;animation:hbgin 1.6s ease .1s forwards;-webkit-mask-image:linear-gradient(#000 65%,transparent);mask-image:linear-gradient(#000 65%,transparent)}
-@keyframes hbgin{to{opacity:1}}
 /* ===== upgrade: hero ===== */
 .aur{position:absolute;z-index:-1;border-radius:50%;filter:blur(70px);opacity:.5;pointer-events:none;will-change:transform}
 .a1{width:38vw;height:38vw;max-width:520px;max-height:520px;right:4%;top:12%;background:radial-gradient(circle,#e4572e,transparent 65%);animation:fl1 14s ease-in-out infinite alternate}
@@ -234,7 +232,7 @@ html.js .pj.rv{opacity:1;transform:none;filter:none}
 
 <main>
 <section class="hero">
-  <canvas class="hbg" aria-hidden="true"></canvas><span class="mono hm">Designer · Mumbai, India</span>
+  <span class="mono hm">Designer · Mumbai, India</span>
   <h1 aria-label="Dhruti Kamtekar"><span class="l" data-split>Dhruti</span><span class="l" data-split data-off="6">Kamtekar</span></h1>
   <p class="wel" aria-label="Welcome to my portfolio"><span class="wl"></span><span class="wt"><span style="--w:0">Welcome</span> <span style="--w:1">to</span> <span style="--w:2">my</span> <span style="--w:3">portfolio</span></span></p>
   <p class="sub hs2">A designer working across brand identity, packaging, editorial and film, with research and culture at the centre of every project.</p>
@@ -475,46 +473,6 @@ a.addEventListener('pointerleave',()=>{pi.style.setProperty('--rx','0deg');pi.st
 const h=$('.hero'),h1=$('.hero h1'),au=$$('.aur');
 h.addEventListener('pointermove',e=>{const r=h.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;h1.style.transform=`translate3d(${x*-14}px,${y*-10}px,0)`;au.forEach((a,i)=>a.style.translate=`${x*(i+1)*-40}px ${y*(i+1)*-30}px`)});}
 })();
-(function(){const cv=$('.hbg');if(!cv)return;const ctx=cv.getContext('2d'),hero=$('.hero');
-let W=0,H=0,dpr=1,on=true,mx=-999,my=-999,px=0,py=0,cx=0,cy=0,R=300,PT=[],lpx=-99,lpy=-99,st=performance.now();
-const PI2=Math.PI*2,ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,PAL=['#e4572e','#ffb627','#f3dfd2','#7fb069'],stag=(k,i,n)=>clamp(k*(1+(n-1)*.25)-i*.25,0,1);
-function size(){const r=cv.getBoundingClientRect();dpr=Math.min(2,devicePixelRatio||1);W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-if(W>900){cx=W*.71;cy=H*.5;R=Math.min(H*.4,W*.235)}else{cx=W*.5;cy=H*.6;R=Math.min(W*.46,H*.3)}if(RM)frame(9000)}
-function petal(r0,r1,w,k,fill,al){if(k<=0)return;const d=r1-r0,L=d*2.7;ctx.beginPath();ctx.moveTo(0,-r0);ctx.bezierCurveTo(w,-r0-d*.35,w*.6,-r1+d*.2,0,-r1);ctx.bezierCurveTo(-w*.6,-r1+d*.2,-w,-r0-d*.35,0,-r0);
-if(fill&&k>.6){ctx.globalAlpha=al*((k-.6)/.4);ctx.fillStyle=fill;ctx.fill();ctx.globalAlpha=1}
-ctx.setLineDash([L,L]);ctx.lineDashOffset=L*(1-k);ctx.stroke();ctx.setLineDash([])}
-function ring(r,k){if(k<=0)return;ctx.beginPath();ctx.arc(0,0,r,-Math.PI/2,-Math.PI/2+PI2*k);ctx.stroke()}
-function dots(n,r,k,rad,col){ctx.fillStyle=col;for(let i=0;i<n;i++){const q=stag(k,i,n);if(q<=0)continue;const a=i/n*PI2;ctx.beginPath();ctx.arc(Math.sin(a)*r,-Math.cos(a)*r,rad*q,0,PI2);ctx.fill()}}
-function layerRot(i,t){return (i%2?1:-1)*t*.000016*(1+i*.18)}
-function frame(t){ctx.clearRect(0,0,W,H);
-const T=26000,u=((t%T)+T)%T,g=u<11000?ease(u/11000):u<17000?1:u<22000?1-ease((u-17000)/5000):0;
-px+=((mx>-500?(mx-W/2)*-.018:0)-px)*.05;py+=((mx>-500?(my-H/2)*-.018:0)-py)*.05;
-const nL=7,K=i=>ease(clamp(g*(nL+1)-i,0,1)),br=1+.012*Math.sin(t/1800);
-ctx.save();ctx.translate(cx+px,cy+py);ctx.scale(br,br);ctx.lineWidth=1.1;ctx.lineJoin='round';
-const W5='rgba(255,255,255,.5)',W3='rgba(255,255,255,.3)';
-// 0 centre
-ctx.save();ctx.rotate(layerRot(0,t));ctx.strokeStyle=W5;ring(R*.045,K(0));ctx.fillStyle='#ffb627';ctx.globalAlpha=K(0);ctx.beginPath();ctx.arc(0,0,R*.02,0,PI2);ctx.fill();ctx.globalAlpha=1;ctx.restore();
-// 1 inner petals
-ctx.save();ctx.rotate(layerRot(1,t));ctx.strokeStyle=W5;for(let i=0;i<8;i++){ctx.save();ctx.rotate(i/8*PI2);petal(R*.06,R*.21,R*.05,stag(K(1),i,8),'#ffb627',.3);ctx.restore()}ctx.restore();
-// 2 dotted ring
-ctx.save();ctx.rotate(layerRot(2,t));ctx.strokeStyle=W3;ring(R*.245,K(2));dots(24,R*.265,K(2),1.8,'rgba(255,255,255,.7)');ctx.restore();
-// 3 outer petals
-ctx.save();ctx.rotate(layerRot(3,t));ctx.strokeStyle=W5;for(let i=0;i<16;i++){ctx.save();ctx.rotate(i/16*PI2);const k=stag(K(3),i,16);petal(R*.29,R*.5,R*.062,k,i%2?'#e4572e':'#f3dfd2',i%2?.28:.12);ctx.restore()}ctx.restore();
-// 4 ring + powder dots
-ctx.save();ctx.rotate(layerRot(4,t));ctx.strokeStyle=W3;ring(R*.54,K(4));dots(48,R*.575,K(4),1.4,'rgba(255,255,255,.55)');ctx.restore();
-// 5 scallops
-ctx.save();ctx.rotate(layerRot(5,t));ctx.strokeStyle=W5;const rs=R*.62*Math.sin(Math.PI/24);for(let i=0;i<24;i++){const q=stag(K(5),i,24);if(q<=0)continue;ctx.save();ctx.rotate((i+.5)/24*PI2);ctx.translate(0,-R*.62);ctx.beginPath();ctx.arc(0,0,rs,Math.PI,Math.PI+Math.PI*q);ctx.stroke();ctx.restore()}ctx.restore();
-// 6 teardrops + outer ring
-ctx.save();ctx.rotate(layerRot(6,t));ctx.strokeStyle=W5;for(let i=0;i<12;i++){ctx.save();ctx.rotate(i/12*PI2);const q=stag(K(6),i,12);petal(R*.72,R*.9,R*.05,q,i%2?'#7fb069':'#ffb627',.3);ctx.restore()}ctx.strokeStyle=W3;ring(R*.97,K(6));dots(12,R*.95,K(6),2,'rgba(255,255,255,.7)');ctx.restore();
-ctx.restore();
-// cursor powder
-PT=PT.filter(p=>{p.l-=16;if(p.l<=0)return false;p.x+=p.vx;p.y+=p.vy;p.vy+=.012;ctx.globalAlpha=Math.min(1,p.l/600);ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,PI2);ctx.fill();return true});ctx.globalAlpha=1;
-if(mx>-500){ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(mx,my,9,0,PI2);ctx.stroke()}}
-function loop(t){requestAnimationFrame(loop);if(!on||document.hidden)return;frame(t-st)}
-new IntersectionObserver(es=>on=es[0].isIntersecting).observe(hero);
-addEventListener('pointermove',e=>{if(e.pointerType==='touch'||RM)return;const r=cv.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;if(Math.hypot(mx-lpx,my-lpy)>14&&mx>=0&&my>=0&&my<=H){lpx=mx;lpy=my;for(let i=0;i<3&&PT.length<160;i++)PT.push({x:mx+(Math.random()-.5)*14,y:my+(Math.random()-.5)*14,vx:(Math.random()-.5)*.8,vy:(Math.random()-.5)*.6,l:1500+Math.random()*900,c:PAL[(Math.random()*4)|0],s:1.2+Math.random()*2.2})}});
-hero.addEventListener('pointerleave',()=>{mx=my=-999});
-addEventListener('resize',size);size();if(!RM)requestAnimationFrame(loop)})();
 route(location.hash.slice(1),true);
 </script>
 </body>
